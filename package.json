@@ -11,7 +11,7 @@
   "author": "George35mk",
   "license": "MIT",
   "repository": {
-    "url": "https://github.com/George35mk/nifti-reader.git"
+    "url": "git://github.com/George35mk/nifti-reader.git"
   },
   "dependencies": {
     "pako": "^2.0.3"
