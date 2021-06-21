@@ -61,17 +61,17 @@
             <canvas id="myCanvas"></canvas>
           </div>
         </mat-tab>
-        <mat-tab label="x-slices">
+        <mat-tab label="Axial-slices">
           <div style="height: calc(100vh - 214px); background: black; overflow: auto;">
             <app-slices-grid *ngIf="slicesMap?.axialSlices" [slices]="slicesMap?.axialSlices"></app-slices-grid>
           </div>
         </mat-tab>
-        <mat-tab label="y-slices">
+        <mat-tab label="Coronal-slices">
           <div style="height: calc(100vh - 214px); background: black; overflow: auto;">
             <app-slices-grid *ngIf="slicesMap?.coronalSlices" [slices]="slicesMap?.coronalSlices"></app-slices-grid>
           </div>
         </mat-tab>
-        <mat-tab label="z-slices">
+        <mat-tab label="Sagittal-slices">
           <div style="height: calc(100vh - 214px); background: black; overflow: auto;">
             <app-slices-grid *ngIf="slicesMap?.sagittalSlices" [slices]="slicesMap?.sagittalSlices"></app-slices-grid>
           </div>
