@@ -1,4 +1,4 @@
 import { Nifti, NiftiHeader } from '../dist';
 
-// const header: NiftiHeader;
+let header: NiftiHeader;
 const nifti = new Nifti();
