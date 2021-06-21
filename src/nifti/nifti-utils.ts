@@ -1,29 +1,69 @@
 import { NIFTI1 } from './NIFTI1';
 import { NIFTI2 } from './NIFTI2';
 
-// add docs for each method
-
 export class NiftiUtils {
+
+  /**
+   * Gets the Int8 value at the specified byte offset
+   * @param data the DataView
+   * @param start the byte offset
+   * @returns an Int8 value
+   */
   static getByteAt(data: DataView, start: number): number {
     return data.getInt8(start);
   }
 
+  /**
+   * Gets the Int16 value at the specified byte offset.
+   * @param data the DataView
+   * @param start the byte offset
+   * @param littleEndian the little endian
+   * @returns an Int16 value
+   */
   static getShortAt(data: DataView, start: number, littleEndian: boolean): number {
     return data.getInt16(start, littleEndian);
   }
 
+  /**
+   * Gets the Int32 value at the specified byte offset.
+   * @param data the DataView
+   * @param start the byte offset
+   * @param littleEndian the little endian
+   * @returns an Int32 value
+   */
   static getIntAt(data: DataView, start: number, littleEndian: boolean): number {
     return data.getInt32(start, littleEndian);
   }
 
+  /**
+   * Gets the Float32 value at the specified byte offset.
+   * @param data the DataView
+   * @param start the byte offset
+   * @param littleEndian the little endian
+   * @returns an Float32 value
+   */
   static getFloatAt(data: DataView, start: number, littleEndian: boolean): number {
     return data.getFloat32(start, littleEndian);
   }
 
+  /**
+   * Gets the Float64 value at the specified byte offset.
+   * @param data the DataView
+   * @param start the byte offset
+   * @param littleEndian the little endian
+   * @returns an Float64 value
+   */
   static getDoubleAt(data: DataView, start: number, littleEndian: boolean): number {
     return data.getFloat64(start, littleEndian);
   }
 
+  /**
+   * Gets the string part of a specific start - end range
+   * @param data the DataView
+   * @param start the start offset
+   * @param end the end offset
+   * @returns a string value
+   */
   static getStringAt(data: DataView, start: number, end: number): string {
     let str = '';
     let ctr;
@@ -40,6 +80,11 @@ export class NiftiUtils {
     return str;
   }
 
+  /**
+   * Checks if the array buffer is Nifti1
+   * @param data the DataView
+   * @returns true if the data is Nifti1, else false
+   */
   static isNIFTI1(data: ArrayBuffer): boolean {
     let mag1;
     let mag2;
@@ -60,6 +105,11 @@ export class NiftiUtils {
     return !!((mag1 === NIFTI1.MAGIC_NUMBER[0]) && (mag2 === NIFTI1.MAGIC_NUMBER[1]) && (mag3 === NIFTI1.MAGIC_NUMBER[2]));
   }
 
+  /**
+   * Checks if the array buffer is Nifti2
+   * @param data the DataView
+   * @returns true if the data is Nifti2, else false
+   */
   static isNIFTI2(data: ArrayBuffer): boolean {
     if (data.byteLength < NIFTI1.STANDARD_HEADER_SIZE) {
       return false;

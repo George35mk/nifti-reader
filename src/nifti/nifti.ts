@@ -11,10 +11,12 @@ export class Nifti {
 
   constructor() {}
 
+  /** Gets the extension location */
   public getExtensionLocation(): number {
     return NIFTI1.MAGIC_COOKIE + 4;
   }
 
+  /** Gets the extension size */
   public getExtensionSize(data: DataView): number {
     return NiftiUtils.getIntAt(data, this.getExtensionLocation(), this.littleEndian);
   }
@@ -46,14 +48,29 @@ export class Nifti {
     return false;
   }
 
+  /**
+   * Decompress a compress nifti file
+   * @param buffer 
+   * @returns 
+   */
   public decompress(buffer: ArrayBuffer): ArrayBuffer {
     return pako.inflate(buffer as pako.Data).buffer;
   }
 
+  /**
+   * Checks the ArrayBuffer if is a Nifti file format.
+   * @param data an ArrayBuffer
+   * @returns true if the file is Nifti1 or Nifti2 file
+   */
   public isNIFTI(data: ArrayBuffer): boolean {
     return (NiftiUtils.isNIFTI1(data) || NiftiUtils.isNIFTI2(data));
   }
 
+  /**
+   * Gets the the nifti header data
+   * @param buffer the nifti file ArrayBuffer data
+   * @returns the nifti header data
+   */
   public getHeader(buffer: ArrayBuffer): NiftiHeader {
 
     const header = {} as NiftiHeader;
