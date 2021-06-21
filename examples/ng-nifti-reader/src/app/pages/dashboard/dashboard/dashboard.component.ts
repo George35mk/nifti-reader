@@ -21,7 +21,6 @@ export class DashboardComponent implements OnInit {
   public file: File | undefined;
 
   public canvas: HTMLCanvasElement | undefined;
-  public imageData!: ImageData | undefined;
 
   public axis: SliceAxis = 'sagittal';
 
@@ -145,10 +144,10 @@ export class DashboardComponent implements OnInit {
         case 'axial':
           imageData = this.nifti.getAxialSlice(typedData, cols, rows, slice, slices);
           break;
-        case 'coronal': // xz coronal
+        case 'coronal':
           imageData = this.nifti.getCoronalSlice(typedData, cols, rows, slice, slices);
           break;
-        case 'sagittal': // xy transverse
+        case 'sagittal':
           imageData = this.nifti.getSagittalSlice(typedData, cols, rows, slice);
           break;
         default:
