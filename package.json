@@ -8,6 +8,9 @@
     "dist"
   ],
   "scripts": {
+    "bump:version:major": "npm version major",
+    "bump:version:minor": "npm version minor",
+    "bump:version:patch": "npm version patch",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc"
   },
