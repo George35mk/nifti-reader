@@ -165,18 +165,6 @@ export class DashboardComponent implements OnInit {
 }
 
 
-
-// type SliceAxis = 'axial' | 'coronal' | 'sagittal';
-
-
-// https://nifti.nimh.nih.gov/pub/dist/src/niftilib/nifti1.h
-// https://www.openfmri.org/dataset-orientation-issues/
-
-// axially: imagesc(D(:,:,32))
-// sagittally: imagesc(squeeze(D(:,48,:))')
-// coronally: imagesc(squeeze(D(64,:,:)))
-
-
 interface SlicesMap {
   axialSlices: ImageData[];
   coronalSlices: ImageData[];
