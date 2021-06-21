@@ -1,0 +1,82 @@
+<div>
+  <div style="height: 164px;">
+    <div style="padding: 20px;">
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+        <input type="file" mat-button id="file" (change)="handleFileInput($event)"/>
+
+        <div>
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+            <button mat-stroked-button (click)="setSliceDirection('axial');" [class.active]="axis === 'axial'">Axial (X)</button>
+            <button mat-stroked-button (click)="setSliceDirection('coronal');" [class.active]="axis === 'coronal'">Coronal (Y)</button>
+            <button mat-stroked-button (click)="setSliceDirection('sagittal');" [class.active]="axis === 'sagittal'">Sagittal (Z)</button>
+          </div>
+        </div>
+      </div>
+
+      <mat-slider
+        [min]="sliderMin"
+        [max]="sliderMax"
+        [step]="1"
+        [value]="sliderValue"
+        (input)="onSliderChange($event)">
+      </mat-slider>
+      <div *ngIf="niftiHeader">Slices: {{niftiHeader.dims[3]}}</div>
+      <div>slice: {{sliderValue}}</div>
+    </div>
+  </div>
+
+  <mat-divider style="width: 100%;"></mat-divider>
+
+  <mat-sidenav-container hasBackdrop="false" class="surface">
+    <mat-sidenav #navigationMenu
+      [autoFocus]="false"
+      position="end"
+      [opened]="true"
+      [mode]="'side'"
+      disableClose="false"
+      class="surface main-sidenav"
+      style="width: 500px;">
+
+      <mat-tab-group>
+        <mat-tab label="File info">
+          <div>
+            <app-nifti-file-info *ngIf="file" [file]="file"></app-nifti-file-info>
+          </div>
+        </mat-tab>
+        <mat-tab label="Header">
+          <div style="height: calc(100vh - 214px); overflow: auto;">
+            <app-nifti-header-section  *ngIf="nifti && niftiHeader"
+              [nifti]="nifti"
+              [niftiHeader]="niftiHeader">
+            </app-nifti-header-section>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-sidenav>
+
+    <mat-sidenav-content class="surface">
+      <mat-tab-group>
+        <mat-tab label="Main">
+          <div style="height: calc(100vh - 214px); background: black;">
+            <canvas id="myCanvas"></canvas>
+          </div>
+        </mat-tab>
+        <mat-tab label="x-slices">
+          <div style="height: calc(100vh - 214px); background: black; overflow: auto;">
+            <app-slices-grid *ngIf="slicesMap?.axialSlices" [slices]="slicesMap?.axialSlices"></app-slices-grid>
+          </div>
+        </mat-tab>
+        <mat-tab label="y-slices">
+          <div style="height: calc(100vh - 214px); background: black; overflow: auto;">
+            <app-slices-grid *ngIf="slicesMap?.coronalSlices" [slices]="slicesMap?.coronalSlices"></app-slices-grid>
+          </div>
+        </mat-tab>
+        <mat-tab label="z-slices">
+          <div style="height: calc(100vh - 214px); background: black; overflow: auto;">
+            <app-slices-grid *ngIf="slicesMap?.sagittalSlices" [slices]="slicesMap?.sagittalSlices"></app-slices-grid>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

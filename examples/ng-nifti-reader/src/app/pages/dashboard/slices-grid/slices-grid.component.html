@@ -1,0 +1,11 @@
+<div class="slices-grid-container" *ngIf="slices">
+  <div fxLayout="row wrap"
+    fxLayout.lt-sm="column"
+    fxLayout.lt-md ="column"
+    fxLayoutGap="16px grid" style="width: 100%;">
+    <div *ngFor="let slice of slices"
+      fxFlex="20%" fxFlex.sm="25%" fxFlex.md="33%" fxFlex.lg="20%" fxFlex.xl="20%">
+      <app-canvas-view [imageData]="slice" style="width: inherit; height: inherit;"></app-canvas-view>
+    </div>
+  </div>
+</div>

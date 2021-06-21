@@ -1,0 +1,17 @@
+mat-sidenav-container {
+  height: calc(100vh - 165px);
+}
+
+
+mat-slider {
+  width: 480px;
+}
+
+canvas {
+  height: inherit;
+}
+
+.active {
+  color: blueviolet;
+  background: rgba(137, 43, 226, 0.288);
+}

@@ -1,0 +1,21 @@
+<div *ngIf="file" style="padding: 20px; background: #efefef; ">
+  <h3>File info</h3>
+  <table>
+    <tr>
+      <td>Name</td>
+      <td>{{file.name}}</td>
+    </tr>
+    <tr>
+      <td>size</td>
+      <td>{{(file.size / 1024 / 1024) | number }} MB</td>
+    </tr>
+    <tr>
+      <td>type</td>
+      <td>{{file.type}}</td>
+    </tr>
+    <tr>
+      <td>Last Modified</td>
+      <td>{{file.lastModified | date}}</td>
+    </tr>
+  </table>
+</div>
