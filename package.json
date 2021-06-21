@@ -13,7 +13,7 @@
     "bump:version:patch": "npm version patch",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
-    "prepublish": "tsc"
+    "prepare": "tsc"
   },
   "author": "George35mk",
   "license": "MIT",
