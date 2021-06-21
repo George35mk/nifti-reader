@@ -271,9 +271,9 @@ export class Nifti {
   }
 
   public getSlices(niftiHeader: NiftiHeader, niftiImage: ArrayBuffer) {
-    const xAxisSlices: ImageData[] = [];
-    const yAxisSlices: ImageData[] = [];
-    const zAxisSlices: ImageData[] = [];
+    const axialSlices: ImageData[] = [];
+    const coronalSlices: ImageData[] = [];
+    const sagittalSlices: ImageData[] = [];
 
     const cols   = niftiHeader.dims[1]; // width
     const rows   = niftiHeader.dims[2]; // height
@@ -284,21 +284,23 @@ export class Nifti {
     let yImageData: ImageData;
     let zImageData: ImageData;
 
-    for (let slice = 0; slice < slices; slice++) {
-      // yz saggital
+
+    for (let slice = 0; slice < cols; slice++) {
       xImageData = this.getAxialSlice(typedData, cols, rows, slice, slices);
-      xAxisSlices.push(xImageData);
-
-      // xz coronal
-      yImageData = this.getCoronalSlice(typedData, cols, rows, slice, slices);
-      yAxisSlices.push(yImageData);
-
-      // xy transverse
-      zImageData = this.getSagittalSlice(typedData, cols, rows, slice);
-      zAxisSlices.push(zImageData);
+      axialSlices.push(xImageData);
     }
 
-    return {xAxisSlices, yAxisSlices, zAxisSlices}
+    for (let slice = 0; slice < rows; slice++) {
+      yImageData = this.getCoronalSlice(typedData, cols, rows, slice, slices);
+      coronalSlices.push(yImageData);
+    }
+
+    for (let slice = 0; slice < slices; slice++) {
+      zImageData = this.getSagittalSlice(typedData, cols, rows, slice);
+      sagittalSlices.push(zImageData);
+    }
+
+    return {axialSlices, coronalSlices, sagittalSlices}
   }
 
 }
