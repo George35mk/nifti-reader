@@ -141,15 +141,9 @@ export class DashboardComponent implements OnInit {
       let typedData = this.nifti.computeTypedData(niftiHeader, niftiImage);
 
       switch (axis) {
-        case 'axial':
-          imageData = this.nifti.getAxialSlice(typedData, cols, rows, slice, slices);
-          break;
-        case 'coronal':
-          imageData = this.nifti.getCoronalSlice(typedData, cols, rows, slice, slices);
-          break;
-        case 'sagittal':
-          imageData = this.nifti.getSagittalSlice(typedData, cols, rows, slice);
-          break;
+        case 'axial': imageData = this.nifti.getAxialSlice(typedData, cols, rows, slice, slices); break;
+        case 'coronal': imageData = this.nifti.getCoronalSlice(typedData, cols, rows, slice, slices); break;
+        case 'sagittal': imageData = this.nifti.getSagittalSlice(typedData, cols, rows, slice); break;
         default:
           console.warn('Unknown axis');
           imageData = new ImageData(cols, rows);
