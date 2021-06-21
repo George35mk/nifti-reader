@@ -12,7 +12,8 @@
     "bump:version:minor": "npm version minor",
     "bump:version:patch": "npm version patch",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc"
+    "build": "tsc",
+    "prepublish": "tsc"
   },
   "author": "George35mk",
   "license": "MIT",
