@@ -1,1 +1,1 @@
-const x = 5;
+export { Nifti } from './nifti/nifti';
