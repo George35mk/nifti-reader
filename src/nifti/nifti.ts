@@ -1,6 +1,7 @@
 import * as pako from 'pako';
 import { NiftiUtils } from './nifti-utils';
 import { NIFTI1 } from './NIFTI1';
+import { NiftiHeader } from './NiftiHeader';
 
 export class Nifti {
 
@@ -303,55 +304,5 @@ export class Nifti {
 }
 
 
-export interface NiftiHeader {
-  sizeof_hdr: number;
-  data_type_10: string;
-  db_name_18: string;
-  extents: number;
-  session_error: number;
-  regular: string;
-  dim_info: number;
-  vox_offset: number; //
-  dims: number[];
-  intent_p1: number;
-  intent_p2: number;
-  intent_p3: number;
-  intent_code: number;
-  datatype: number;
-  numBitsPerVoxel: number;
-  slice_start: number;
-  pixDims: number[];
-  scl_slope: number;
-  scl_inter: number;
-  slice_end: number;
-  slice_code: number;
-  xyzt_units: number;
-  cal_max: number;
-  cal_min: number;
-  slice_duration: number;
-  toffset: number;
-  description: string;
-  aux_file: string;
-  qform_code: number;
-  sform_code: number;
-  quatern_b: number;
-  quatern_c: number;
-  quatern_d: number;
-  qoffset_x: number;
-  qoffset_y: number;
-  qoffset_z: number;
-  srow_x: number[];
-  srow_y: number[];
-  srow_z: number[];
-  affine: number[][];
-  intent_name: string;
-  magic: any; // string
-  isHDR: boolean;
-  extensionFlag: number[];
-  extensionCode: number | undefined;
-  extensionSize: number | undefined;
-  littleEndian: boolean;
-}
-
-
 export type TypedData = Uint8Array | Int16Array | Int32Array | Float32Array | Float64Array | Int8Array | Uint16Array | Uint32Array | undefined
+export type SliceAxis = 'axial' | 'coronal' | 'sagittal';
