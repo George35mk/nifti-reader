@@ -77,8 +77,8 @@ export class Nifti {
     const dataView = new DataView(buffer);
 
     header.sizeof_hdr      = NiftiUtils.getIntAt(dataView, 0, this.littleEndian);
-    header.data_type_10    = NiftiUtils.getStringAt(dataView, 4, 14);
-    header.db_name_18      = NiftiUtils.getStringAt(dataView, 14, 32);
+    header.data_type       = NiftiUtils.getStringAt(dataView, 4, 14);
+    header.db_name         = NiftiUtils.getStringAt(dataView, 14, 32);
     header.extents         = NiftiUtils.getFloatAt(dataView, 32, this.littleEndian);
     header.session_error   = NiftiUtils.getShortAt(dataView, 36, this.littleEndian);
     header.regular         = NiftiUtils.getStringAt(dataView, 38, 39);

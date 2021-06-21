@@ -1,7 +1,7 @@
 export interface NiftiHeader {
   sizeof_hdr: number;
-  data_type_10: string;
-  db_name_18: string;
+  data_type: string;
+  db_name: string;
   extents: number;
   session_error: number;
   regular: string;
