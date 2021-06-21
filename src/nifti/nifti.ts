@@ -355,3 +355,4 @@ export interface NiftiHeader {
 
 
 export type TypedData = Uint8Array | Int16Array | Int32Array | Float32Array | Float64Array | Int8Array | Uint16Array | Uint32Array | undefined
+export type SliceAxis = 'axial' | 'coronal' | 'sagittal';
