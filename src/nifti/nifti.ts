@@ -1,7 +1,9 @@
 import * as pako from 'pako';
 import { NiftiUtils } from './nifti-utils';
-import { NIFTI1 } from './NIFTI1';
+import { NIFTI_1 } from './consts/NIFTI1';
 import { NiftiHeader } from './NiftiHeader';
+import { Nifti1 } from './nifti1';
+import { Nifti2 } from './nifti2';
 
 export class Nifti {
 
@@ -13,7 +15,7 @@ export class Nifti {
 
   /** Gets the extension location */
   public getExtensionLocation(): number {
-    return NIFTI1.MAGIC_COOKIE + 4;
+    return NIFTI_1.MAGIC_COOKIE + 4;
   }
 
   /** Gets the extension size */
@@ -65,6 +67,29 @@ export class Nifti {
   public isNIFTI(data: ArrayBuffer): boolean {
     return (NiftiUtils.isNIFTI1(data) || NiftiUtils.isNIFTI2(data));
   }
+
+  public readHeader(data: ArrayBuffer) {
+    let nifti: Nifti1 | Nifti2;
+    let header: any;
+
+    if (this.isCompressed(data)) {
+      data = this.decompress(data);
+    }
+
+    if (NiftiUtils.isNIFTI1(data)) {
+      nifti = new Nifti1();
+    } else if (NiftiUtils.isNIFTI2(data)) {
+      nifti = new Nifti2();
+    }
+
+    if (nifti) {
+      header = nifti.readHeader(data);
+    } else {
+      console.error("That file does not appear to be NIFTI!");
+    }
+
+    return header;
+};
 
   /**
    * Gets the the nifti header data
@@ -146,11 +171,11 @@ export class Nifti {
     header.intent_name = NiftiUtils.getStringAt(dataView, 328, 344);
     header.magic = NiftiUtils.getStringAt(dataView, 344, 348) as any;
 
-    header.isHDR = (header.magic === NIFTI1.MAGIC_NUMBER2);
+    header.isHDR = (header.magic === NIFTI_1.MAGIC_NUMBER2);
 
     header.extensionFlag = [];
 
-    if (dataView.byteLength > NIFTI1.MAGIC_COOKIE) {
+    if (dataView.byteLength > NIFTI_1.MAGIC_COOKIE) {
       header.extensionFlag[0] = NiftiUtils.getByteAt(dataView, 348);
       header.extensionFlag[1] = NiftiUtils.getByteAt(dataView, 348 + 1);
       header.extensionFlag[2] = NiftiUtils.getByteAt(dataView, 348 + 2);
@@ -190,14 +215,14 @@ export class Nifti {
 
     // extract method: getTypedData(niftiImage)
     switch (niftiHeader.datatype) {
-      case NIFTI1.TYPE_UINT8:   typedData = new Uint8Array(niftiImage); break;
-      case NIFTI1.TYPE_INT16:   typedData = new Int16Array(niftiImage); break;
-      case NIFTI1.TYPE_INT32:   typedData = new Int32Array(niftiImage); break;
-      case NIFTI1.TYPE_FLOAT32: typedData = new Float32Array(niftiImage); break;
-      case NIFTI1.TYPE_FLOAT64: typedData = new Float64Array(niftiImage); break;
-      case NIFTI1.TYPE_INT8:    typedData = new Int8Array(niftiImage); break;
-      case NIFTI1.TYPE_UINT16:  typedData = new Uint16Array(niftiImage); break;
-      case NIFTI1.TYPE_UINT32:  typedData = new Uint32Array(niftiImage); break;
+      case NIFTI_1.TYPE_UINT8:   typedData = new Uint8Array(niftiImage); break;
+      case NIFTI_1.TYPE_INT16:   typedData = new Int16Array(niftiImage); break;
+      case NIFTI_1.TYPE_INT32:   typedData = new Int32Array(niftiImage); break;
+      case NIFTI_1.TYPE_FLOAT32: typedData = new Float32Array(niftiImage); break;
+      case NIFTI_1.TYPE_FLOAT64: typedData = new Float64Array(niftiImage); break;
+      case NIFTI_1.TYPE_INT8:    typedData = new Int8Array(niftiImage); break;
+      case NIFTI_1.TYPE_UINT16:  typedData = new Uint16Array(niftiImage); break;
+      case NIFTI_1.TYPE_UINT32:  typedData = new Uint32Array(niftiImage); break;
       default:
         console.warn('Unknown type');
         break;

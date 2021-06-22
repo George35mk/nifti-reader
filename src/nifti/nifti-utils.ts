@@ -1,5 +1,5 @@
-import { NIFTI1 } from './NIFTI1';
-import { NIFTI2 } from './NIFTI2';
+import { NIFTI_1 } from './consts/NIFTI1';
+import { NIFTI_2 } from './consts/NIFTI2';
 
 export class NiftiUtils {
 
@@ -90,19 +90,19 @@ export class NiftiUtils {
     let mag2;
     let mag3;
 
-    if (data.byteLength < NIFTI1.STANDARD_HEADER_SIZE) {
+    if (data.byteLength < NIFTI_1.STANDARD_HEADER_SIZE) {
       return false;
     }
 
     const dataView = new DataView(data);
 
     if (dataView) {
-      mag1 = dataView.getUint8(NIFTI1.MAGIC_NUMBER_LOCATION);
-      mag2 = dataView.getUint8(NIFTI1.MAGIC_NUMBER_LOCATION + 1);
-      mag3 = dataView.getUint8(NIFTI1.MAGIC_NUMBER_LOCATION + 2);
+      mag1 = dataView.getUint8(NIFTI_1.MAGIC_NUMBER_LOCATION);
+      mag2 = dataView.getUint8(NIFTI_1.MAGIC_NUMBER_LOCATION + 1);
+      mag3 = dataView.getUint8(NIFTI_1.MAGIC_NUMBER_LOCATION + 2);
     }
 
-    return !!((mag1 === NIFTI1.MAGIC_NUMBER[0]) && (mag2 === NIFTI1.MAGIC_NUMBER[1]) && (mag3 === NIFTI1.MAGIC_NUMBER[2]));
+    return !!((mag1 === NIFTI_1.MAGIC_NUMBER[0]) && (mag2 === NIFTI_1.MAGIC_NUMBER[1]) && (mag3 === NIFTI_1.MAGIC_NUMBER[2]));
   }
 
   /**
@@ -111,15 +111,37 @@ export class NiftiUtils {
    * @returns true if the data is Nifti2, else false
    */
   static isNIFTI2(data: ArrayBuffer): boolean {
-    if (data.byteLength < NIFTI1.STANDARD_HEADER_SIZE) {
+    if (data.byteLength < NIFTI_1.STANDARD_HEADER_SIZE) {
       return false;
     }
 
     const dataView = new DataView(data);
-    const mag1 = dataView.getUint8(NIFTI2.MAGIC_NUMBER_LOCATION);
-    const mag2 = dataView.getUint8(NIFTI2.MAGIC_NUMBER_LOCATION + 1);
-    const mag3 = dataView.getUint8(NIFTI2.MAGIC_NUMBER_LOCATION + 2);
+    const mag1 = dataView.getUint8(NIFTI_2.MAGIC_NUMBER_LOCATION);
+    const mag2 = dataView.getUint8(NIFTI_2.MAGIC_NUMBER_LOCATION + 1);
+    const mag3 = dataView.getUint8(NIFTI_2.MAGIC_NUMBER_LOCATION + 2);
 
-    return !!((mag1 === NIFTI2.MAGIC_NUMBER[0]) && (mag2 === NIFTI2.MAGIC_NUMBER[1]) && (mag3 === NIFTI2.MAGIC_NUMBER[2]));
+    return !!((mag1 === NIFTI_2.MAGIC_NUMBER[0]) && (mag2 === NIFTI_2.MAGIC_NUMBER[1]) && (mag3 === NIFTI_2.MAGIC_NUMBER[2]));
+  }
+
+  static isString(obj: any) {
+    return (typeof obj === "string" || obj instanceof String);
+  };
+
+  static formatNumber(num: any, shortFormat?: any) {
+    let val = 0;
+
+    if (this.isString(num)) {
+      val = Number(num);
+    } else {
+      val = num;
+    }
+
+    if (shortFormat) {
+      val = parseFloat(val.toPrecision(5));
+    } else {
+      val = parseFloat(val.toPrecision(7));
+    }
+
+    return val;
   }
 }
